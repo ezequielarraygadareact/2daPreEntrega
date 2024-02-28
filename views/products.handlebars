@@ -1,0 +1,39 @@
+<h1>Lista Productos</h1>
+
+<table>
+    <tr>
+        <th>Id:</th>
+        <th>Título:</th>
+        <th>Descripción:</th>
+        <th>Código:</th>
+        <th>Precio:</th>
+        <th>Estado:</th>
+        <th>Stock:</th>
+        <th>Categoría:</th>
+        <th>Imágen:</th>
+    </tr>
+
+    {{#each products}}
+        <tr>
+            <td>{{_id}}</td>
+            <td>{{title}}</td>
+            <td>{{description}}</td>
+            <td>{{code}}</td>
+            <td>${{price}}</td>
+            <td>{{status}}</td>
+            <td>{{stock}}</td>
+            <td>{{category}}</td>
+            <td>{{thumbnail}}</td>
+            <td>
+                <button class="addToCartButton" data-productid="{{_id}}">Agregar</button> 
+            </td>
+        </tr>
+    {{/each}}
+</table>
+{{#if totalPages}}
+    <div>
+        {{#each [...Array(totalPages).keys()]}}
+        <a href="/products?page={{this}}">{{this}}</a>
+        {{/each}}
+    </div>
+{{/if}}
