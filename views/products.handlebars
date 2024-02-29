@@ -30,10 +30,3 @@
         </tr>
     {{/each}}
 </table>
-{{#if totalPages}}
-    <div>
-        {{#each [...Array(totalPages).keys()]}}
-        <a href="/products?page={{this}}">{{this}}</a>
-        {{/each}}
-    </div>
-{{/if}}

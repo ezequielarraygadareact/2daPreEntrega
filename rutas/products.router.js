@@ -12,6 +12,7 @@ router.get('/products', async (req, res) => {
         const sortOrder = req.query.sort ? req.query.sort : null;
         const category = req.query.category ? req.query.category : null;
 
+        
         const result = await prct.getProducts(page, limit, sortOrder, category);
 
         res.render('products', {

@@ -11,14 +11,8 @@ const productSchema = new mongoose.Schema({
     thumbnail: { type: String, required: true }, 
     code: { type: Number, required: [true, "Código de producto"], unique: true }, 
     stock: { type: Number, required: true }, 
-    category: {
-        type: String,
-        enum: ["Higiene", "Medicación", "Alimentos"]
-    },
-    status:  {
-        type: String,
-        enum: ["Disponible", "No-Disponible"]
-    }
+    category: { type: Number, required: true }, 
+    status:  { type: Number, required: true }, 
 });
 
 productSchema.plugin(mongoosePaginate);
