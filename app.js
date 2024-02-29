@@ -21,7 +21,7 @@ const port = 8080;
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(__dirname + "/publico"))
+app.use(express.static(__dirname + "/public"))
 
 app.use("/" , router)
 app.use('/api/carts', cartRouter)
@@ -29,7 +29,7 @@ app.use('/products', productsRouter)
 app.use("/realTimeProducts", routerRealTimesProducts)
 
 app.use(express.static(__dirname + '/views'))
-app.use(express.static(path.join(__dirname, "publico")))
+app.use(express.static(path.join(__dirname, 'public')));
 app.engine("handlebars", handlebars.engine())
 app.set("views", __dirname + '/views') 
 app.set('view engine', "handlebars")
