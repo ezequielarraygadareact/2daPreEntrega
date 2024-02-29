@@ -15,7 +15,7 @@ export class ProductManagerMongo {
     
             const query = category ? { category: category } : {};
             
-            return await this.model.paginate({query}, options);
+            return await this.model.paginate(query, options);
         } catch (error) {
             console.error("Error al cargar los productos", error);
         }
