@@ -1,4 +1,4 @@
-<h1>Lista Productos</h1>
+<h1>Lista de Productos</h1>
 
 <table>
     <tr>
@@ -29,13 +29,13 @@
                 <button class="detailButton" data-productid="{{_id}}">Detalle</button> 
             </td>
             <script>
-document.querySelectorAll('.detailButton').forEach(button => {
-    button.addEventListener('click', function() {
-        const productId = this.getAttribute('data-productid');
-        window.location.href = `/product/${productId}`;
-    });
-});
-</script>
+            document.querySelectorAll('.detailButton').forEach(button => {
+            button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-productid');
+            window.location.href = `/product/${productId}`;
+            });
+            });
+            </script>
         </tr>
     {{/each}}
 </table>
