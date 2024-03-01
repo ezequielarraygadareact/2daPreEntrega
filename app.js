@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(__dirname + "/public"))
 
 app.use("/" , router)
-app.use('/api/carts', cartRouter)
+app.use('/carts', cartRouter)
 app.use('/products', productsRouter)
 app.use("/realTimeProducts", routerRealTimesProducts)
 

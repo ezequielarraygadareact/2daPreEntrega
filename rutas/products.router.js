@@ -27,6 +27,30 @@ router.get('/products', async (req, res) => {
     }
 });
 
+router.get('/product/:pid', async (req, res) => {
+    let { pid } = req.params;
+    let result = await prct.getProduct(pid);
+        if (result) {
+        res.send(`
+            <h1>Detalle del Producto</h1>
+            <table>
+                <tr><th>Id:</th><td>${result._id}</td></tr>
+                <tr><th>Título:</th><td>${result.title}</td></tr>
+                <tr><th>Descripción:</th><td>${result.description}</td></tr>
+                <tr><th>Código:</th><td>${result.code}</td></tr>
+                <tr><th>Precio:</th><td>$${result.price}</td></tr>
+                <tr><th>Estado:</th><td>${result.status}</td></tr>
+                <tr><th>Stock:</th><td>${result.stock}</td></tr>
+                <tr><th>Categoría:</th><td>${result.category}</td></tr>
+                <tr><th>Imágen:</th><td>${result.thumbnail}</td></tr>
+            </table>
+        `)
+        console.log('Producto encontrado');
+    } else {
+        res.send('Producto no encontrado');
+    }
+});
+
 router.get('/:pid', async (req, res) => {
     let { pid } = req.params;
     let result = await prct.getProduct(pid);

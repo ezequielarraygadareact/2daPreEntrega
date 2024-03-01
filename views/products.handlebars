@@ -26,7 +26,16 @@
             <td>{{thumbnail}}</td>
             <td>
                 <button class="addToCartButton" data-productid="{{_id}}">Agregar</button> 
+                <button class="detailButton" data-productid="{{_id}}">Detalle</button> 
             </td>
+            <script>
+document.querySelectorAll('.detailButton').forEach(button => {
+    button.addEventListener('click', function() {
+        const productId = this.getAttribute('data-productid');
+        window.location.href = `/product/${productId}`;
+    });
+});
+</script>
         </tr>
     {{/each}}
 </table>
