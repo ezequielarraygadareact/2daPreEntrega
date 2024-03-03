@@ -28,27 +28,19 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/products/:pid', async (req, res) => {
-    let { pid } = req.params;
-    let result = await prct.getProduct(pid);
-        if (result) {
-        res.send(`
-            <h1>Detalle del Producto</h1>
-            <table>
-                <tr><th>Id:</th><td>${result._id}</td></tr>
-                <tr><th>Título:</th><td>${result.title}</td></tr>
-                <tr><th>Descripción:</th><td>${result.description}</td></tr>
-                <tr><th>Código:</th><td>${result.code}</td></tr>
-                <tr><th>Precio:</th><td>$${result.price}</td></tr>
-                <tr><th>Estado:</th><td>${result.status}</td></tr>
-                <tr><th>Stock:</th><td>${result.stock}</td></tr>
-                <tr><th>Categoría:</th><td>${result.category}</td></tr>
-                <tr><th>Imágen:</th><td>${result.thumbnail}</td></tr>
-            </table>
-        `)
-        console.log('Producto encontrado');
-    } else {
-        res.send('Producto no encontrado');
+
+router.get('/details/:pid', async (req, res) => {
+    try {
+        const { pid } = req.params;
+        const product = await prct.getProduct(pid);
+        if (product) {
+            res.render('product_details', { product });
+        } else {
+            res.status(404).send('Producto no encontrado');
+        }
+    } catch (error) {
+        console.error("Error al obtener el detalle del producto", error);
+        res.status(500).send({ error: error.message });
     }
 });
 

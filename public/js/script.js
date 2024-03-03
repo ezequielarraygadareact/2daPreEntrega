@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Script');
+    console.log('Scripts On');
     document.querySelectorAll('.addToCartButton').forEach(button => {
         button.addEventListener('click', async function() {
             console.log('Agregar al Carrito');
@@ -25,3 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+
