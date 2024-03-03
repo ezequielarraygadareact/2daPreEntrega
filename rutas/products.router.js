@@ -5,7 +5,7 @@ const router = express.Router()
 
 const prct = new ProductManagerMongo();
 
-router.get('/products', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const page = req.query.page ? parseInt(req.query.page) : 1;
         const limit = req.query.limit ? parseInt(req.query.limit) : 10;
@@ -23,11 +23,12 @@ router.get('/products', async (req, res) => {
             hasPrevPage: result.hasPrevPage
         });
     } catch (error) {
-        console.error("No se pudieron cargar los productos", error);
+        console.error("No se pudo actualizar el producto", error);
+        res.status(500).send({ error: error.message });
     }
 });
 
-router.get('/product/:pid', async (req, res) => {
+router.get('/products/:pid', async (req, res) => {
     let { pid } = req.params;
     let result = await prct.getProduct(pid);
         if (result) {
