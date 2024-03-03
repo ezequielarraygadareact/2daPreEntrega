@@ -58,6 +58,8 @@ document.getElementById("deleteProduct").addEventListener("submit", (event) => {
 
 })
 
+
+
 socket.on('response', (response) => {
     if(response.status === 'success') {
         document.getElementById('responseContainer').innerHTML = `<p class="success">${response.message}</p>`;
@@ -65,3 +67,5 @@ socket.on('response', (response) => {
         document.getElementById('responseContainer').innerHTML = `<p class="error">${response.message}</p>`;
     }
 });    
+
+

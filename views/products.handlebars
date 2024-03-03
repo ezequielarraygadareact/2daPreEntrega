@@ -25,7 +25,7 @@
             <td>{{category}}</td>
             <td>{{thumbnail}}</td>
             <td>
-                <button class="addToCartButton" data-productId="{{_id}}">Agregar</button> 
+                <button class="addToCartButton" data-productId="{{_id}}">Agregar</button>
                 <button class="detailButton" data-productId="{{_id}}">Detalle</button> 
             </td>
         </tr>
@@ -49,4 +49,15 @@
             window.location.href = `/products/details/${productId}`;
         });
     });
+
+    document.querySelectorAll('.addToCartButton').forEach(button => {
+    console.log('ADD BOTOON')
+    button.addEventListener('click', function() {
+        const productId = this.getAttribute('data-productId');
+        socket.emit("addToCart", productId);
+    });
+});
 </script>
+
+<script src="/socket.io/socket.io.js"></script>
+

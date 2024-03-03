@@ -9,8 +9,10 @@ import router from './rutas/products.router.js';
 import cartRouter from './rutas/carts.router.js'
 import routerRealTimesProducts from "./rutas/realTimeProducts.router.js";
 import path from 'path';
+import { CartManagerMongo } from './dao/manejadores/CartManagerMongo.js';
 
 const p = new ProductManager();
+const crt = new CartManagerMongo();
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -81,8 +83,24 @@ socketServer.on("connection", (socket) => {
         }
     })
 
-})
+socket.on("addToCart", async (productId) => {
+    try {
+        // Supongamos que aquí obtienes el ID del carro del usuario actual
+        const ObjectId = mongoose.Types.ObjectId;
+        const cartId = new ObjectId();
 
+        // Llama al método addToCart
+        const result = await crt.addToCart(cartId, productId);
+
+        // Envía una respuesta al cliente
+        socket.emit("addToCartResponse", { status: "success", message: result });
+    } catch (error) {
+        console.error("No se pudo agregar el producto al carro:", error);
+        socket.emit("addToCartResponse", { status: "error", message: error.message });
+    }
+});
+
+})
 
 const environment = async () => {
     await mongoose.connect("mongodb+srv://EArraygada:Nico1993@arraygada1.vpmhvb3.mongodb.net/DB?retryWrites=true&w=majority")

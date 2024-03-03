@@ -33,36 +33,49 @@ export class CartManagerMongo {
 
     async addToCart(cid, pid) {
         try {
-            const cartExists = await this.model.findOne({ _id: cid });
-            const productExists = await productModel.findOne({ _id: pid });
+            // Verificar si el carro existe
+            let cartExists = await this.model.findById(cid);
+    
             if (!cartExists) {
-                throw new Error(`El carro con id ${cid} no existe`);
+                // Si el carro no existe, crear un nuevo carro
+                cartExists = await this.addCart();
+                console.log('Carro nuevo creado')
             }
-
+    
+            // Verificar si el producto existe
+            const productExists = await productModel.findById(pid);
+    
             if (!productExists) {
                 throw new Error(`El producto con id ${pid} no existe`);
             }
     
+            // Verificar si el producto ya está en el carro
             const existingProduct = cartExists.products.find(product => product.productId.toString() === pid.toString());
     
             if (existingProduct) {
                 existingProduct.quantity++;
-            } else {               
+                console.log('producto exste y se suma')
+
+            } else {
+                // Si el producto no está en el carro, agregarlo
                 cartExists.products.push({
                     productId: pid,
                     quantity: 1
                 });
-            }
+                console.log('Producto agergado en el carro')
 
-            await cartExists.save(); 
+            }
+    
+            // Guardar los cambios en el carro
+            await this.updateCart(cartExists);
+    
             return "Producto agregado exitosamente";
-            
+    
         } catch (error) {
             console.error("No se pudo agregar el producto al carro:", error);
-            
+            throw error;
         }
     }
-
     async deleteProduct(pid, cid) {
         try {
             const cart = await this.model.findById(cid);
