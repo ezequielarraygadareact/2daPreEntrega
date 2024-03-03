@@ -37,6 +37,16 @@
     {{/each}}
 </table>
 
+<div>
+    {{#if hasPrevPage}}
+    <a class="prevPageLink" href="/products?page={{prevPage}}&limit={{limit}}">Anterior</a>
+{{/if}}
+{{#if hasNextPage}}
+    <a class="nextPageLink" href="/products?page={{nextPage}}&limit={{limit}}">Siguiente</a>
+{{/if}}
+</div>
+
+
 <script>
         document.querySelectorAll('.detailButton').forEach(button => {
         button.addEventListener('click', function() {

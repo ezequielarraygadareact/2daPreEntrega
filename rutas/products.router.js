@@ -20,7 +20,9 @@ router.get('/', async (req, res) => {
             totalPages: result.totalPages,
             currentPage: result.page,
             hasNextPage: result.hasNextPage,
-            hasPrevPage: result.hasPrevPage
+            hasPrevPage: result.hasPrevPage,
+            nextPage: result.nextPage,
+            prevPage: result.prevPage
         });
     } catch (error) {
         console.error("No se pudo actualizar el producto", error);
