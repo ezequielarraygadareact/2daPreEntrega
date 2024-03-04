@@ -10,6 +10,9 @@ import cartRouter from './rutas/carts.router.js'
 import routerRealTimesProducts from "./rutas/realTimeProducts.router.js";
 import path from 'path';
 import { CartManagerMongo } from './dao/manejadores/CartManagerMongo.js';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import loginRouter from './rutas/login.router.js';
 
 const p = new ProductManager();
 const crt = new CartManagerMongo();
@@ -20,6 +23,14 @@ const __dirname = dirname(__filename)
 const app = express();
 const port = 8080;
 
+app.use(session({
+    secret: "12345679",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: "mongodb+srv://EArraygada:Nico1993@arraygada1.vpmhvb3.mongodb.net/DB?retryWrites=true&w=majority"
+    })
+}));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(__dirname + "/public"))
@@ -27,6 +38,9 @@ app.use(express.static(__dirname + "/public"))
 app.use("/products", router)
 app.use('/carts', cartRouter)
 app.use("/realTimeProducts", routerRealTimesProducts)
+app.use("/", loginRouter);
+
+
 
 app.use(express.static(__dirname + '/views'))
 app.use(express.static(path.join(__dirname, 'public')));
@@ -85,14 +99,9 @@ socketServer.on("connection", (socket) => {
 
 socket.on("addToCart", async (productId) => {
     try {
-        // Supongamos que aquí obtienes el ID del carro del usuario actual
         const ObjectId = mongoose.Types.ObjectId;
         const cartId = new ObjectId();
-
-        // Llama al método addToCart
         const result = await crt.addToCart(cartId, productId);
-
-        // Envía una respuesta al cliente
         socket.emit("addToCartResponse", { status: "success", message: result });
     } catch (error) {
         console.error("No se pudo agregar el producto al carro:", error);

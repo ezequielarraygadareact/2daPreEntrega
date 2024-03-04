@@ -33,31 +33,23 @@ export class CartManagerMongo {
 
     async addToCart(cid, pid) {
         try {
-            // Verificar si el carro existe
             let cartExists = await this.model.findById(cid);
     
             if (!cartExists) {
-                // Si el carro no existe, crear un nuevo carro
                 cartExists = await this.addCart();
                 console.log('Carro nuevo creado')
             }
-    
-            // Verificar si el producto existe
             const productExists = await productModel.findById(pid);
-    
             if (!productExists) {
                 throw new Error(`El producto con id ${pid} no existe`);
             }
-    
-            // Verificar si el producto ya está en el carro
-            const existingProduct = cartExists.products.find(product => product.productId.toString() === pid.toString());
+                const existingProduct = cartExists.products.find(product => product.productId.toString() === pid.toString());
     
             if (existingProduct) {
                 existingProduct.quantity++;
                 console.log('producto exste y se suma')
 
             } else {
-                // Si el producto no está en el carro, agregarlo
                 cartExists.products.push({
                     productId: pid,
                     quantity: 1
@@ -65,10 +57,7 @@ export class CartManagerMongo {
                 console.log('Producto agergado en el carro')
 
             }
-    
-            // Guardar los cambios en el carro
             await this.updateCart(cartExists);
-    
             return "Producto agregado exitosamente";
     
         } catch (error) {

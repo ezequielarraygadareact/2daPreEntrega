@@ -51,7 +51,6 @@
     });
 
     document.querySelectorAll('.addToCartButton').forEach(button => {
-    console.log('ADD BOTOON')
     button.addEventListener('click', function() {
         const productId = this.getAttribute('data-productId');
         socket.emit("addToCart", productId);
