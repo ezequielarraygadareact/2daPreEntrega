@@ -22,7 +22,6 @@ loginRouter.post("/signup", async (req, res) => {
     try {
         await userManager.newUser(req.body);
         res.status(200).json({ message: "Usuario creado exitosamente" });
-        return res.redirect('/')
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -48,7 +47,7 @@ loginRouter.post("/login", async (req, res) => {
     }
 });
 
-loginRouter.get("/signout", async (req, res) => {
+loginRouter.get("/logout", async (req, res) => {
     req.session.destroy(() => {
         res.status(200).json({ message: "Sesión cerrada exitosamente" });
     });
