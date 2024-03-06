@@ -4,11 +4,16 @@ import { LoginManagerMongo } from "../dao/manejadores/LoginManagerMongo.js";
 const loginRouter = Router();
 const userManager = new LoginManagerMongo();
 
+
+loginRouter.get("/", async (req, res) => {
+    res.redirect("/login");
+});
+
 loginRouter.get("/signup", async (req, res) => {
     res.render('signup');
 });
 
-loginRouter.get("/", async (req, res) => {
+loginRouter.get("/login", async (req, res) => {
     res.render('login');
 });
 
@@ -21,7 +26,7 @@ loginRouter.post("/signup", async (req, res) => {
 
     try {
         await userManager.newUser(req.body);
-        req.session.signupSuccess = true; //
+        req.session.signupSuccess = true; 
         res.redirect('/');
     } catch (error) {
         res.status(500).json({ error: error.message });
