@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2daPreEntrega</title>
                 <script src="/socket.io/socket.io.js"></script>
-
 </head>
 <body>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         {{{body}}}
         <script>
-        // Conexión al servidor de Socket.io
         const socket = io();
 
-        // Manejar el evento "addToCartResponse" del servidor
         socket.on("addToCartResponse", function(response) {
             console.log(response);
-            // Aquí puedes manejar la respuesta del servidor, por ejemplo, mostrar un mensaje al usuario
             if (response.status === "success") {
                 alert("Producto agregado al carro exitosamente");
             } else {
@@ -24,11 +21,11 @@
             }
         });
 
-        // Función para enviar el evento "addToCart" al servidor cuando se hace clic en el botón
         function addToCart(productId) {
             socket.emit("addToCart", productId);
         }
     </script>
+    
 </body>
 </html>                                         
 

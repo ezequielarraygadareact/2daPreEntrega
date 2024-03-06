@@ -31,6 +31,10 @@ app.use(session({
         mongoUrl: "mongodb+srv://EArraygada:Nico1993@arraygada1.vpmhvb3.mongodb.net/DB?retryWrites=true&w=majority"
     })
 }));
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+});
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(__dirname + "/public"))

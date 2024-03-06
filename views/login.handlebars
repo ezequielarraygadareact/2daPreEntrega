@@ -1,3 +1,11 @@
+{{#if signupSuccess}}
+    <script>
+        Swal.fire({
+            title: 'Usuario creado exitosamente',
+            icon: 'success'
+        });
+    </script>
+{{/if}}
 
 <form method="POST" action="/login">
     <label for="email">Email</label>
