@@ -8,7 +8,7 @@ loginRouter.get("/signup", async (req, res) => {
     res.render('signup');
 });
 
-loginRouter.get("/login", async (req, res) => {
+loginRouter.get("/", async (req, res) => {
     res.render('login');
 });
 
@@ -22,6 +22,7 @@ loginRouter.post("/signup", async (req, res) => {
     try {
         await userManager.newUser(req.body);
         res.status(200).json({ message: "Usuario creado exitosamente" });
+        return res.redirect('/')
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
