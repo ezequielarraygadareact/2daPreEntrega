@@ -1,9 +1,7 @@
-import { fileURLToPath } from 'url';
 import handlebars from 'express-handlebars';
 import { Server } from 'socket.io';
 import express from 'express';
 import mongoose from "mongoose";
-import { dirname } from 'path';
 import { ProductManager } from './dao/Manejadores/ProductManager.js';
 import router from './rutas/products.router.js';
 import cartRouter from './rutas/carts.router.js'
@@ -13,12 +11,11 @@ import { CartManagerMongo } from './dao/manejadores/CartManagerMongo.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import loginRouter from './rutas/login.router.js';
+import __dirname from './utils.js';
+
 
 const p = new ProductManager();
 const crt = new CartManagerMongo();
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 const app = express();
 const port = 8080;
@@ -37,19 +34,19 @@ app.use((req, res, next) => {
 });
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(__dirname + "/public"))
+app.use(express.static(`${__dirname}/public`))
 
 app.use("/products", router)
 app.use('/carts', cartRouter)
 app.use("/realTimeProducts", routerRealTimesProducts)
-app.use("/", loginRouter);
+app.use("/", loginRouter)
 
 
 
 app.use(express.static(__dirname + '/views'))
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(`${__dirname}/public`)));
 app.engine("handlebars", handlebars.engine())
-app.set("views", __dirname + '/views')
+app.set('views', `${__dirname}/views`)
 app.set('view engine', "handlebars")
 
 const httpServer = app.listen(port, () => console.log("Express server On"))
